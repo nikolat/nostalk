@@ -1,0 +1,21 @@
+//******************************************************************************
+// network update
+//******************************************************************************
+On_homeurl    { 'https://raw.githubusercontent.com/nikolat/nostalk/main/' }
+On_useorigin1 { 1 }
+
+//******************************************************************************
+// recommend sites
+//******************************************************************************
+On_sakura.portalsites
+{
+	"/
+		うかフィード%(CHR(1))https://feed.ukagaka.net/%(CHR(1))%(CHR(1))%(CHR(2))/
+	"
+}
+On_sakura.recommendsites
+{
+	"/
+		yaya-shiori%(CHR(1))https://github.com/YAYA-shiori/yaya-shiori/wiki%(CHR(1))%(CHR(1))%(CHR(2))/
+	"
+}

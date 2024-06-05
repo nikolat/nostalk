@@ -1,0 +1,130 @@
+//******************************************************************************
+// required event
+//******************************************************************************
+OnFirstBoot          { '\1\s[10]\0\s[0]\e' }
+OnShellChanged       { '\1\s[10]\0\s[0]\e' }
+OnWindowStateRestore { '\1\s[10]\0\s[0]\e' }
+OnGhostChanged       { OnBoot() }
+OnBoot               { '\1\s[10]\0\s[0]\e' }
+OnClose              { '\_w[500]\-\e' }
+
+//******************************************************************************
+// update event
+//******************************************************************************
+OnUpdateBegin        { '\0\s[0]\_qUpdate Begin.\_q\e' }
+OnUpdateComplete     { '\0\s[0]\_q' + reference[0] + '.\_q\e' }
+OnUpdateFailure      { '\0\s[0]\_q' + reference[0] + '.\_q\e' }
+OnUpdateReady
+{
+	_n = 0
+	if sender == 'embryo' {
+		_n = reference[0] + 1
+	} else {
+		_n = reference[0]
+	}
+	if _n > 1 {
+		'\0\s[0]\_q' + _n + ' files exist.\_q\e'
+	} elseif _n == 1 {
+		'\0\s[0]\_q' + _n + ' file exists.\_q\e'
+	}
+}
+
+//******************************************************************************
+// mouse event
+//******************************************************************************
+OnMouseDoubleClick
+{
+	AYATEMPLATE.MouseEventExec('MouseDoubleClick');
+}
+MouseDoubleClick0 : nonoverlap
+{
+	'\e'
+}
+
+//******************************************************************************
+// key event
+//******************************************************************************
+OnKeyPress
+{
+	if ISFUNC('sys.key.' + reference[0]) {
+		EVAL('sys.key.' + reference[0])
+	}
+}
+sys.key.r
+{
+	'\![reload,shiori]\0\s[0]\_qReloaded.\_q\e'
+}
+//******************************************************************************
+// other
+//******************************************************************************
+OnSurfaceRestore
+{
+	'\1\s[10]\0\s[0]\e'
+}
+//******************************************************************************
+// Nostr
+//******************************************************************************
+ExternalEvent.OnNostr
+{
+	OnNostr()
+}
+OnNostr
+{
+	_protocol_version = reference[0]
+	_avatar_url = ''
+	case _protocol_version {
+		when 'Nostr/0.1' {
+			sys.save.note = reference[1]
+			sys.save.name = reference[2]
+			sys.save.display_name = reference[3]
+			_avatar_url = reference[4]
+		}
+		when 'Nostr/0.3' {
+			sys.save.note = reference[2]
+			sys.save.name = reference[3]
+			sys.save.display_name = reference[4]
+			_avatar_url = reference[5]
+		}
+	}
+	if sys.save.note == '' || _avatar_url == ''
+		return
+	_a = SPLITPATH(_avatar_url)
+	_filename = _a[2] + _a[3]
+	"\![execute,http-get,%(_avatar_url),--async=save_avatar,--file=%(_filename)]\e"
+}
+OnExecuteHTTPFailure
+{
+}
+OnExecuteHTTPComplete
+{
+	if reference[0] != 'get' || reference[1] != 'save_avatar'
+		return
+	_filepath = reference[3]
+	_saori_path = 'saori\saori-resized-png\resizedpngmini.dll'
+	_type = FUNCTIONEX(_saori_path, 'GetImageType', _filepath)
+	if _type == 'UNKNOWN'
+		return
+	_path_after = GETSETTING('coreinfo.path') + '..\..\shell\master\surface0.png'
+	_r = FUNCTIONEX(_saori_path, 'ToResizedPng', _filepath, _path_after, 128, 128)
+	if _r != '0'
+		return
+	sys.save.has_reserved_talk = 1
+	'\![reload,shell]\e'
+}
+OnSecondChange
+{
+	if reference[3] == 1 && sys.save.has_reserved_talk {
+		sys.save.has_reserved_talk = 0
+		Nostr.ShowTalk()
+	}
+}
+Nostr.ShowTalk
+{
+	"\0\s[0]\_q\f[bold,true]%(SHIORI3FW.EscapeAllTags(sys.save.display_name))\f[bold,default] /
+		@%(SHIORI3FW.EscapeAllTags(sys.save.name))\n\n\_q/
+		%(SHIORI3FW.EscapeDangerousTags(sys.save.note))/
+		\e"
+	sys.save.note = ''
+	sys.save.name = ''
+	sys.save.display_name = ''
+}

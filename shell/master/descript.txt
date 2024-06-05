@@ -1,0 +1,13 @@
+charset,UTF-8
+type,shell
+name,master
+
+craftman,
+craftmanurl,
+
+seriko.alignmenttodesktop,free
+
+readme,readme.txt
+readme.charset,UTF-8
+
+seriko.use_self_alpha,1

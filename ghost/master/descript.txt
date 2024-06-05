@@ -1,0 +1,10 @@
+charset,UTF-8
+type,ghost
+name,nostalk
+sakura.name,ノス民
+kero.name,none
+craftman,Don
+craftmanurl,https://nikolat.github.io/
+homeurl,https://raw.githubusercontent.com/nikolat/nostalk/main/
+shiori,yaya.dll
+readme.charset,UTF-8
