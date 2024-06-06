@@ -10,4 +10,7 @@ seriko.alignmenttodesktop,free
 readme,readme.txt
 readme.charset,UTF-8
 
+sakura.bindgroup0.name,輪郭,角丸
+sakura.bindgroup1.name,輪郭,丸
+
 seriko.use_self_alpha,1

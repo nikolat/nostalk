@@ -80,17 +80,29 @@ OnNostr
 			_avatar_url = reference[4]
 		}
 		when 'Nostr/0.3' {
+			_kind = reference[1]
+			if _kind != 'note' {
+				Nostr.Clear()
+				return
+			}
 			sys.save.note = reference[2]
 			sys.save.name = reference[3]
 			sys.save.display_name = reference[4]
 			_avatar_url = reference[5]
 		}
 	}
-	if sys.save.note == '' || _avatar_url == ''
+	if sys.save.note == '' || _avatar_url == '' {
+		Nostr.Clear()
 		return
-	_a = SPLITPATH(_avatar_url)
+	}
+	sys.save.has_reserved_talk = 0
+	_a = SPLITPATH(SPLIT(_avatar_url, '?')[0])
 	_filename = _a[2] + _a[3]
-	"\![execute,http-get,%(_avatar_url),--async=save_avatar,--file=%(_filename)]\e"
+	_filepath = GETSETTING('coreinfo.path') + '\var\' + _filename
+	if FSIZE(_filepath) >= 0
+		Nostr.Resize(_filepath)
+	else
+		"\![execute,http-get,%(_avatar_url),--async=save_avatar,--file=%(_filename)]\e"
 }
 OnExecuteHTTPFailure
 {
@@ -99,22 +111,29 @@ OnExecuteHTTPComplete
 {
 	if reference[0] != 'get' || reference[1] != 'save_avatar'
 		return
-	_filepath = reference[3]
+	Nostr.Resize(reference[3])
+}
+Nostr.Resize
+{
+	_filepath = _argv[0]
 	_saori_path = 'saori\saori-resized-png\resizedpngmini.dll'
 	_type = FUNCTIONEX(_saori_path, 'GetImageType', _filepath)
-	if _type == 'UNKNOWN'
+	if _type == 'UNKNOWN' {
+		Nostr.Clear()
 		return
+	}
 	_path_after = GETSETTING('coreinfo.path') + '..\..\shell\master\surface0.png'
 	_r = FUNCTIONEX(_saori_path, 'ToResizedPng', _filepath, _path_after, 128, 128)
-	if _r != '0'
+	if _r != '0' {
+		Nostr.Clear()
 		return
+	}
 	sys.save.has_reserved_talk = 1
 	'\![reload,shell]\e'
 }
 OnSecondChange
 {
 	if reference[3] == 1 && sys.save.has_reserved_talk {
-		sys.save.has_reserved_talk = 0
 		Nostr.ShowTalk()
 	}
 }
@@ -124,7 +143,24 @@ Nostr.ShowTalk
 		@%(SHIORI3FW.EscapeAllTags(sys.save.name))\n\n\_q/
 		%(SHIORI3FW.EscapeDangerousTags(sys.save.note))/
 		\e"
+	Nostr.Clear()
+}
+Nostr.Clear
+{
+	sys.save.has_reserved_talk = 0
 	sys.save.note = ''
 	sys.save.name = ''
 	sys.save.display_name = ''
+}
+OnSystemUnload.Nostr
+{
+	ERASEVAR(/
+		'sys.save.has_reserved_talk',/
+		'sys.save.note',/
+		'sys.save.name',/
+		'sys.save.display_name'/
+	)
+	foreach FENUM('.\var\'); _path {
+		FDEL('.\var\' + _path)
+	}
 }
