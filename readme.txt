@@ -21,6 +21,12 @@
 □Nostr/0.3
     Nostrゅう
       https://github.com/nikolat/nostryu
+    nokakoi
+      https://github.com/betonetojp/nokakoi
+    noka
+      https://github.com/betonetojp/noka
+    nostter に SSTP over HTTP で喋らせるボタンを生やす
+      https://let.hatelabo.jp/Nikola/let/karR3IrkgOAA
 
 ■ライセンス
 
