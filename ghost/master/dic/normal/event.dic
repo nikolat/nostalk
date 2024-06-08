@@ -38,6 +38,32 @@ OnMouseDoubleClick
 }
 MouseDoubleClick0 : nonoverlap
 {
+	'\0\s[0]\_q/
+	\![*]\__q[OpenAngolmois]Open Angolmois\__q\n/
+	\![*]\__q[OpenNostryu]Open Nostrゅう\__q\n\n/
+	\![*]\__q[Close]Close\__q\n/
+	'
+}
+//******************************************************************************
+// select event
+//******************************************************************************
+OnChoiceSelect
+{
+	_id = reference[0]
+	if ISFUNC('sys.cs.' + _id) {
+		EVAL('sys.cs.' + _id)
+	}
+}
+sys.cs.OpenAngolmois
+{
+	'\![open,browser,https://nikolat.github.io/angolmois/]\e'
+}
+sys.cs.OpenNostryu
+{
+	'\![raiseplugin,a80c8840-f39e-11ee-96b0-0800200c9a66,OnMenuExec]\e'
+}
+sys.cs.Close
+{
 	'\e'
 }
 
