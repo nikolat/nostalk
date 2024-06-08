@@ -12,5 +12,6 @@ readme.charset,UTF-8
 
 sakura.bindgroup0.name,輪郭,角丸
 sakura.bindgroup1.name,輪郭,丸
+sakura.bindgroup10.name,透明度,半透明
 
 seriko.use_self_alpha,1
