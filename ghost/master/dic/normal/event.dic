@@ -151,8 +151,8 @@ OnSecondChange
 Nostr.ShowTalk
 {
 	"\0\s[0]\_q\f[bold,true]%(SHIORI3FW.EscapeAllTags(sys.save.display_name))\f[bold,default] /
-		@%(SHIORI3FW.EscapeAllTags(sys.save.name))\n\n/
-		%(SHIORI3FW.EscapeDangerousTags(sys.save.note))/
+		@%(SHIORI3FW.EscapeAllTags(sys.save.name))\n\n\_q/
+		\![set,balloonwait,0]%(SHIORI3FW.EscapeDangerousTags(sys.save.note))/
 		\e"
 	Nostr.Clear()
 }
