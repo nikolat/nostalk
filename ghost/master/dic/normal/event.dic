@@ -59,7 +59,7 @@ sys.key.r
 //******************************************************************************
 OnSurfaceRestore
 {
-	'\1\s[10]\0\s[0]\e'
+	Nostr.Hive()
 }
 //******************************************************************************
 // Nostr
@@ -150,11 +150,26 @@ OnSecondChange
 }
 Nostr.ShowTalk
 {
-	"\0\s[0]\_q\f[bold,true]%(SHIORI3FW.EscapeAllTags(sys.save.display_name))\f[bold,default] /
+	if (sys.save.note != '')
+		"\0\s[0]\_q\f[bold,true]%(SHIORI3FW.EscapeAllTags(sys.save.display_name))\f[bold,default] /
 		@%(SHIORI3FW.EscapeAllTags(sys.save.name))\n\n\_q/
 		\![set,balloonwait,0]%(SHIORI3FW.EscapeDangerousTags(sys.save.note))/
 		\e"
 	Nostr.Clear()
+}
+OnBalloonClose
+{
+	Nostr.Hive()
+}
+OnBalloonTimeout
+{
+	Nostr.Hive()
+}
+Nostr.Hive
+{
+	sys.save.has_reserved_talk = 0
+	_filepath = GETSETTING('coreinfo.path') + '..\..\shell\master\default.png'
+	Nostr.Resize(_filepath)
 }
 Nostr.Clear
 {
