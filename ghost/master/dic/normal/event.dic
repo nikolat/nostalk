@@ -133,10 +133,13 @@ OnNostr
 		_filename = _a[2] + _a[3]
 		_filepath = GETSETTING('coreinfo.path') + '\var\' + _filename
 	}
-	if FSIZE(_filepath) >= 0
+	if FSIZE(_filepath) >= 0 {
 		Nostr.Resize(_filepath)
-	else
+		Nostr.ShowTalk()
+	}
+	else {
 		"\![execute,http-get,%(_avatar_url),--async=save_avatar,--file=%(_filename)]\e"
+	}
 }
 OnExecuteHTTPFailure
 {
@@ -146,6 +149,7 @@ OnExecuteHTTPComplete
 	if reference[0] != 'get' || reference[1] != 'save_avatar'
 		return
 	Nostr.Resize(reference[3])
+	Nostr.ShowTalk()
 }
 Nostr.Resize
 {
@@ -154,16 +158,17 @@ Nostr.Resize
 	_type = FUNCTIONEX(_saori_path, 'GetImageType', _filepath)
 	if _type == 'UNKNOWN' {
 		Nostr.Clear()
-		'\e'
 		return
 	}
 	_path_after = GETSETTING('coreinfo.path') + '..\..\shell\master\surface0.png'
 	_r = FUNCTIONEX(_saori_path, 'ToResizedPng', _filepath, _path_after, 128, 128)
 	if _r != '0' {
 		Nostr.Clear()
-		'\e'
 		return
 	}
+}
+Nostr.ShowTalk
+{
 	if (sys.save.note != '')
 		"\![reload,shell]\0\s[0]\![bind,透明度,半透明,0]\_q\f[bold,true]%(SHIORI3FW.EscapeAllTags(sys.save.display_name))\f[bold,default] /
 		@%(SHIORI3FW.EscapeAllTags(sys.save.name))\n\n\_q/
@@ -182,7 +187,8 @@ OnBalloonTimeout
 Nostr.Hive
 {
 	_filepath = GETSETTING('coreinfo.path') + '..\..\shell\master\default.png'
-	'\0\![bind,透明度,半透明,1]' + Nostr.Resize(_filepath)
+	Nostr.Resize(_filepath)
+	'\![reload,shell]\0\![bind,透明度,半透明,1]\e'
 }
 Nostr.Clear
 {
