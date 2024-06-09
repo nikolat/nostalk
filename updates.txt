@@ -2,7 +2,7 @@ charset,UTF-8
 file,LICENSE65d3616852dbf7b1a6d4b53b00626032size=7048date=2012-12-21T00:00:00
 file,ghost/master/descript.txt9108d2fdbb70b26abadae1760a207c96size=228date=2012-12-21T00:00:00
 file,ghost/master/dic/emerg/yaya_emerg_dic.dic9e18f57308e99887d939171bf11b22d3size=876date=2012-12-21T00:00:00
-file,ghost/master/dic/normal/event.dic22cbde2018bb3360f130584ca2308cbbsize=5360date=2012-12-21T00:00:00
+file,ghost/master/dic/normal/event.dic1501c37160467d30e35573735b43f2easize=5079date=2012-12-21T00:00:00
 file,ghost/master/dic/normal/resource.dic1fb2887091495c3033d14f0a609c2090size=708date=2012-12-21T00:00:00
 file,ghost/master/dic/normal/yaya_tmpl_util.dic594dbb3f77cabbfec2a7a6a699ff9ec1size=650date=2012-12-21T00:00:00
 file,ghost/master/dic/system/_loading_order.txt0868241bb617c7c18013e2c024d18dd9size=18date=2012-12-21T00:00:00
@@ -17,7 +17,7 @@ file,ghost/master/yaya.dll49b388973209005e5586f9e54b008bb1size=880640date=201
 file,ghost/master/yaya.txt455bf51a1c71d34507b50e7f0b93c70csize=2498date=2012-12-21T00:00:00
 file,ghost/master/yaya_emerg.txtd9ee78e2068ff80d809325bd4fa8228bsize=1055date=2012-12-21T00:00:00
 file,install.txt2f38bfbc2ece3ab6165e0b8378eb4627size=56date=2012-12-21T00:00:00
-file,readme.txt0b461360b5873c65d194352b8f0162f0size=1667date=2012-12-21T00:00:00
+file,readme.txtf7282a42c065af7e451ff122be97b9aasize=1392date=2012-12-21T00:00:00
 file,shell/master/circle.png0a68a304adcb6ac49f1d177bdcae131asize=432date=2012-12-21T00:00:00
 file,shell/master/default.png131f6166302e7957088a5cac4b3f4c60size=443date=2012-12-21T00:00:00
 file,shell/master/descript.txta80e4c18edd161107c7553d8652e2a87size=274date=2012-12-21T00:00:00
