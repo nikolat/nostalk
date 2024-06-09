@@ -133,7 +133,6 @@ OnNostr
 		_filename = _a[2] + _a[3]
 		_filepath = GETSETTING('coreinfo.path') + '\var\' + _filename
 	}
-	sys.save.has_reserved_talk = 0
 	if FSIZE(_filepath) >= 0
 		Nostr.Resize(_filepath)
 	else
@@ -165,19 +164,8 @@ Nostr.Resize
 		'\e'
 		return
 	}
-	sys.save.has_reserved_talk = 1
-	'\![reload,shell]\e'
-}
-OnSecondChange
-{
-	if reference[3] == 1 && sys.save.has_reserved_talk {
-		Nostr.ShowTalk()
-	}
-}
-Nostr.ShowTalk
-{
 	if (sys.save.note != '')
-		"\0\s[0]\![bind,透明度,半透明,0]\_q\f[bold,true]%(SHIORI3FW.EscapeAllTags(sys.save.display_name))\f[bold,default] /
+		"\![reload,shell]\0\s[0]\![bind,透明度,半透明,0]\_q\f[bold,true]%(SHIORI3FW.EscapeAllTags(sys.save.display_name))\f[bold,default] /
 		@%(SHIORI3FW.EscapeAllTags(sys.save.name))\n\n\_q/
 		\![set,balloonwait,0]%(SHIORI3FW.EscapeDangerousTags(sys.save.note))/
 		\e"
@@ -193,13 +181,11 @@ OnBalloonTimeout
 }
 Nostr.Hive
 {
-	sys.save.has_reserved_talk = 0
 	_filepath = GETSETTING('coreinfo.path') + '..\..\shell\master\default.png'
 	'\0\![bind,透明度,半透明,1]' + Nostr.Resize(_filepath)
 }
 Nostr.Clear
 {
-	sys.save.has_reserved_talk = 0
 	sys.save.note = ''
 	sys.save.name = ''
 	sys.save.display_name = ''
@@ -207,7 +193,6 @@ Nostr.Clear
 OnSystemUnload.Nostr
 {
 	ERASEVAR(/
-		'sys.save.has_reserved_talk',/
 		'sys.save.note',/
 		'sys.save.name',/
 		'sys.save.display_name'/
