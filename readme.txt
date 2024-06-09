@@ -1,7 +1,7 @@
 ========================================================================
 【ソフト名称】nostalk
 【 制 作 者 】Don
-【 動作環境 】Windows11 23H2 + SSP/2.6.69
+【 動作環境 】Windows11 23H2 + SSP/2.6.73
 【 タ イ プ 】「伺か」用ゴースト
 【 取扱種別 】フリーウェア
 【 配布月日 】2024/06/05
@@ -14,19 +14,8 @@
   SSTPによるNostrイベント通知(Nostr/0.1,Nostr/0.3)に対応しており、
   シェルをリアルタイムに変更してトークを再生します。
 
-□Nostr/0.1
-    angolmois
-      https://github.com/nikolat/angolmois
-
-□Nostr/0.3
-    Nostrゅう
-      https://github.com/nikolat/nostryu
-    nokakoi
-      https://github.com/betonetojp/nokakoi
-    noka
-      https://github.com/betonetojp/noka
-    nostter に SSTP over HTTP で喋らせるボタンを生やす
-      https://let.hatelabo.jp/Nikola/let/karR3IrkgOAA
+  UKADOC OnNostr
+    https://ssp.shillest.net/ukadoc/manual/list_shiori_event_ex.html#OnNostr
 
 ■ライセンス
 
