@@ -157,8 +157,7 @@ Nostr.Resize
 	_saori_path = 'saori\saori-resized-png\resizedpngmini.dll'
 	_type = FUNCTIONEX(_saori_path, 'GetImageType', _filepath)
 	if _type == 'UNKNOWN' {
-		Nostr.Clear()
-		return
+		_filepath = Nostr.DefaultAvatarPath()
 	}
 	_path_after = GETSETTING('coreinfo.path') + '..\..\shell\master\surface1.png'
 	_r = FUNCTIONEX(_saori_path, 'ToResizedPng', _filepath, _path_after, 128, 128)
