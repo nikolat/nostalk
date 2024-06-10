@@ -85,7 +85,7 @@ sys.key.r
 //******************************************************************************
 OnSurfaceRestore
 {
-	Nostr.Hive()
+	Nostr.Hide()
 }
 //******************************************************************************
 // Nostr
@@ -178,13 +178,13 @@ Nostr.ShowTalk
 }
 OnBalloonClose
 {
-	Nostr.Hive()
+	Nostr.Hide()
 }
 OnBalloonTimeout
 {
-	Nostr.Hive()
+	Nostr.Hide()
 }
-Nostr.Hive
+Nostr.Hide
 {
 	_filepath = GETSETTING('coreinfo.path') + '..\..\shell\master\default.png'
 	Nostr.Resize(_filepath)
