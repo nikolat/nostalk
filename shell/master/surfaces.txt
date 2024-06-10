@@ -12,6 +12,15 @@ animation1.pattern0,reduce,101,0,0,0
 animation10.interval,bind
 animation10.pattern0,reduce,200,0,0,0
 }
+surface1
+{
+animation0.interval,bind
+animation0.pattern0,reduce,100,0,0,0
+animation1.interval,bind
+animation1.pattern0,reduce,101,0,0,0
+animation10.interval,bind
+animation10.pattern0,reduce,200,0,0,0
+}
 surface100
 {
 element0,base,rounded_corners.png,0,0
