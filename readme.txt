@@ -1,7 +1,7 @@
 ========================================================================
 【ソフト名称】nostalk
 【 制 作 者 】Don
-【 動作環境 】Windows11 23H2 + SSP/2.6.73
+【 動作環境 】Windows11 23H2 + SSP/2.6.75
 【 タ イ プ 】「伺か」用ゴースト
 【 取扱種別 】フリーウェア
 【 配布月日 】2024/06/05
@@ -24,7 +24,7 @@
     yaya-shiori
       https://github.com/YAYA-shiori/yaya-shiori
 
-□SAORIとして「resizedpngmini.dll」を使用しています。
+□SAORIとして「Resized Png Mini」を改造して使用しています。
 
     Resized Png Mini
       https://github.com/tukinami/saori-resized-png-mini
