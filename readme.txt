@@ -24,7 +24,7 @@
     yaya-shiori
       https://github.com/YAYA-shiori/yaya-shiori
 
-□SAORIとして「Resized Png Mini」を改造して使用しています。
+□SAORIとして「Resized Png Mini」を使用しています。
 
     Resized Png Mini
       https://github.com/tukinami/saori-resized-png-mini

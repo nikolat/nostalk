@@ -162,6 +162,10 @@ Nostr.Resize
 	_r = FUNCTIONEX(_saori_path, 'GetImageInfo', _filepath)
 	_width = valueex[0]
 	_height = valueex[1]
+	if _r != '0' {
+		Nostr.Clear()
+		return
+	}
 	_width_after = -1
 	_height_after = -1
 	if (_width > _height) {
