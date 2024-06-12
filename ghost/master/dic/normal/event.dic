@@ -167,7 +167,7 @@ Nostr.Resize
 	if (_width > _height) {
 		_height_after = 128
 	}
-	elseif (_width > _height) {
+	elseif (_width < _height) {
 		_width_after = 128
 	}
 	else {
