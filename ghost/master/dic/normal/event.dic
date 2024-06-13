@@ -96,30 +96,36 @@ ExternalEvent.OnNostr
 }
 OnNostr
 {
+	Nostr.Clear()
 	_protocol_version = reference[0]
 	_avatar_url = ''
 	case _protocol_version {
-		when 'Nostr/0.1' {
-			sys.save.note = reference[1]
-			sys.save.name = reference[2]
-			sys.save.display_name = reference[3]
-			_avatar_url = reference[4]
-		}
 		when 'Nostr/0.3' {
 			_kind = reference[1]
 			if _kind != 'note' {
-				Nostr.Clear()
 				'\e'
 				return
 			}
-			sys.save.note = reference[2]
+			sys.save.content = reference[2]
 			sys.save.name = reference[3]
 			sys.save.display_name = reference[4]
 			_avatar_url = reference[5]
 		}
+		when 'Nostr/0.4' {
+			_kind = reference[1]
+			if _kind != 1 {
+				'\e'
+				return
+			}
+			sys.save.content = reference[2]
+			sys.save.name = reference[3]
+			sys.save.display_name = reference[4]
+			_avatar_url = reference[5]
+			sys.save.note = reference[6]
+			sys.save.npub = reference[7]
+		}
 	}
-	if sys.save.note == ''{
-		Nostr.Clear()
+	if sys.save.content == ''{
 		'\e'
 		return
 	}
@@ -130,7 +136,7 @@ OnNostr
 	}
 	else {
 		_a = SPLITPATH(SPLIT(_avatar_url, '?')[0])
-		_filename = _a[2] + _a[3]
+		_filename = sys.save.npub + '_' + _a[2] + _a[3]
 		_filepath = GETSETTING('coreinfo.path') + '\var\' + _filename
 	}
 	if FSIZE(_filepath) >= 0 {
@@ -187,10 +193,10 @@ Nostr.Resize
 }
 Nostr.ShowTalk
 {
-	if (sys.save.note != '')
+	if (sys.save.content != '')
 		"\![reload,shell]\0\s[1]\![bind,透明度,半透明,0]\_q\f[bold,true]%(SHIORI3FW.EscapeAllTags(sys.save.display_name))\f[bold,default] /
 		@%(SHIORI3FW.EscapeAllTags(sys.save.name))\n\n\_q/
-		\![set,balloonwait,0]%(SHIORI3FW.EscapeDangerousTags(sys.save.note))/
+		\![set,balloonwait,0]%(SHIORI3FW.EscapeDangerousTags(sys.save.content))/
 		\e"
 	Nostr.Clear()
 }
@@ -212,16 +218,20 @@ Nostr.DefaultAvatarPath
 }
 Nostr.Clear
 {
-	sys.save.note = ''
+	sys.save.content = ''
 	sys.save.name = ''
 	sys.save.display_name = ''
+	sys.save.note = ''
+	sys.save.npub = ''
 }
 OnSystemUnload.Nostr
 {
 	ERASEVAR(/
-		'sys.save.note',/
+		'sys.save.content',/
 		'sys.save.name',/
 		'sys.save.display_name'/
+		'sys.save.note'/
+		'sys.save.npub'/
 	)
 	foreach FENUM('.\var\'); _path {
 		FDEL('.\var\' + _path)
