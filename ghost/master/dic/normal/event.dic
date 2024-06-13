@@ -102,9 +102,17 @@ OnNostr
 	case _protocol_version {
 		when 'Nostr/0.3' {
 			_kind = reference[1]
-			if _kind != 'note' {
-				'\e'
-				return
+			case _kind {
+				when 'note' {
+					sys.save.kind = 1
+				}
+				when 'reaction' {
+					sys.save.kind = 7
+				}
+				others {
+					'\e'
+					return
+				}
 			}
 			sys.save.content = reference[2]
 			sys.save.name = reference[3]
@@ -113,16 +121,22 @@ OnNostr
 		}
 		when 'Nostr/0.4' {
 			_kind = reference[1]
-			if _kind != 1 {
+			_supported_kinds = (1, 7)
+			if ASEARCH(_kind, _supported_kinds) == -1 {
 				'\e'
 				return
 			}
+			sys.save.kind = _kind
 			sys.save.content = reference[2]
 			sys.save.name = reference[3]
 			sys.save.display_name = reference[4]
 			_avatar_url = reference[5]
 			sys.save.note = reference[6]
 			sys.save.npub = reference[7]
+		}
+		others {
+			'\e'
+			return
 		}
 	}
 	if sys.save.content == ''{
@@ -174,10 +188,10 @@ Nostr.Resize
 	}
 	_width_after = -1
 	_height_after = -1
-	if (_width > _height) {
+	if _width > _height {
 		_height_after = 128
 	}
-	elseif (_width < _height) {
+	elseif _width < _height {
 		_width_after = 128
 	}
 	else {
@@ -193,11 +207,31 @@ Nostr.Resize
 }
 Nostr.ShowTalk
 {
-	if (sys.save.content != '')
-		"\![reload,shell]\0\s[1]\![bind,透明度,半透明,0]\_q\f[bold,true]%(SHIORI3FW.EscapeAllTags(sys.save.display_name))\f[bold,default] /
-		@%(SHIORI3FW.EscapeAllTags(sys.save.name))\n\n\_q/
-		\![set,balloonwait,0]%(SHIORI3FW.EscapeDangerousTags(sys.save.content))/
-		\e"
+	case sys.save.kind {
+		when 1 {
+			if sys.save.content != ''
+				"\![reload,shell]\0\s[1]\![bind,透明度,半透明,0]\_q\f[bold,true]%(SHIORI3FW.EscapeAllTags(sys.save.display_name))\f[bold,default] /
+				@%(SHIORI3FW.EscapeAllTags(sys.save.name))\n\n\_q/
+				\![set,balloonwait,0]%(SHIORI3FW.EscapeDangerousTags(sys.save.content))/
+				\e"
+		}
+		when 7 {
+			_height = ''
+			_color = ''
+			if sys.save.content == ''
+				sys.save.content = '+'
+			if sys.save.content == '+'
+				sys.save.content = '♥'
+			if sys.save.content == '♥'
+				_color = '\f[color,red]'
+			if STRLEN(sys.save.content) == 1
+				_height = '\f[height,500%]'
+			"\![reload,shell]\0\s[1]\![bind,透明度,半透明,0]\_q\f[bold,true]%(SHIORI3FW.EscapeAllTags(sys.save.display_name))\f[bold,default] /
+				@%(SHIORI3FW.EscapeAllTags(sys.save.name))\n\n/
+				%(_height)%(_color)\f[align,center]%(SHIORI3FW.EscapeDangerousTags(sys.save.content))/
+				\e"
+		}
+	}
 	Nostr.Clear()
 }
 OnBalloonClose
@@ -218,6 +252,7 @@ Nostr.DefaultAvatarPath
 }
 Nostr.Clear
 {
+	sys.save.kind = ''
 	sys.save.content = ''
 	sys.save.name = ''
 	sys.save.display_name = ''
