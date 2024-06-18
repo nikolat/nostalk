@@ -179,8 +179,25 @@ Nostr.Resize
 	if _type == 'UNKNOWN' {
 		_filepath = Nostr.DefaultAvatarPath()
 	}
+	_r = FUNCTIONEX(_saori_path, 'GetImageInfo', _filepath)
+	_width = valueex[0]
+	_height = valueex[1]
+	if _r != '0' {
+		Nostr.Clear()
+		return
+	}
 	_width_after = -1
-	_height_after = 128
+	_height_after = -1
+	if _width < _height {
+		_height_after = 128
+	}
+	elseif _width > _height {
+		_width_after = 128
+	}
+	else {
+		_width_after = 128
+		_height_after = 128
+	}
 	_path_after = GETSETTING('coreinfo.path') + '..\..\shell\master\surface1.png'
 	_r = FUNCTIONEX(_saori_path, 'ToResizedPng', _filepath, _path_after, _width_after, _height_after)
 	if _r != '0' {

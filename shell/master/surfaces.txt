@@ -14,6 +14,8 @@ animation10.pattern0,reduce,200,0,0,0
 }
 surface1
 {
+element0,base,surface10.png,0,0
+element1,overlay,surface1.png,0,0
 animation0.interval,bind
 animation0.pattern0,reduce,100,0,0,0
 animation1.interval,bind
