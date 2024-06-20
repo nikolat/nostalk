@@ -213,6 +213,7 @@ Nostr.ShowTalk
 				"\![reload,shell]\0\s[1]\![bind,透明度,半透明,0]\_q\f[bold,true]%(SHIORI3FW.EscapeAllTags(sys.save.display_name))\f[bold,default] /
 				@%(SHIORI3FW.EscapeAllTags(sys.save.name))\n\n\_q/
 				\![set,balloonwait,0]%(SHIORI3FW.EscapeDangerousTags(sys.save.content))/
+				\_l[0,0]\f[align,right]\f[height,300%]\_a[fav,%(sys.save.note),%(sys.save.npub),%(sys.save.kind)]⭐\_a/
 				\e"
 		}
 		when 7 {
@@ -236,6 +237,33 @@ Nostr.ShowTalk
 		}
 	}
 	Nostr.Clear()
+}
+OnAnchorSelectEx
+{
+	if ISFUNC('sys.asex.' + reference[1]) {
+		EVAL('sys.asex.' + reference[1])
+	}
+}
+sys.asex.fav
+{
+	_note = ''
+	_nevent = ''
+	if RE_MATCH(reference[2], '^note1.+$')
+		_note = reference[2]
+	elseif RE_MATCH(reference[2], '^nevent1.+$')
+		_nevent = reference[2]
+	_npub = reference[3]
+	_kind = reference[4]
+	_content = '⭐'
+	_url = 'https://nostr-unyu.vercel.app/api/query_fav'
+	if _note != ''
+		_url += "?note=%(_note)"
+	elseif _nevent != ''
+		_url += "?nevent=%(_nevent)"
+	_url += "&npub=%(_npub)"
+	_url += "&kind=%(_kind)"
+	_url += "&content=%(_content)"
+	"\![execute,http-post,%(_url),--async=fav]\e"
 }
 OnBalloonClose
 {
