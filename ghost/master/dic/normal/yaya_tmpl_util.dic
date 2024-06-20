@@ -17,3 +17,16 @@ AYATEMPLATE.MouseEventExec
 		return
 	}
 }
+
+//------------------------------------------------------------------------------
+//エスケープ
+AYATEMPLATE.EscapeText
+{
+	_r = _argv[0]
+	if RE_SEARCH(_r,'["\[\],]') {
+		'"' + REPLACE(_r,'"','""') + '"'
+	}
+	else {
+		_r
+	}
+}
