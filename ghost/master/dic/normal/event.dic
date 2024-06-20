@@ -40,8 +40,8 @@ MouseDoubleClick0
 {
 	'\0\s[0]\![bind,透明度,半透明,0]\_q/
 	\![*]\__q[OpenAngolmois]Open Angolmois\__q\n/
-	\![*]\__q[OpenNokauka]Open nokauka\__q\n\n/
-	\![*]\__q[OpenUnyuReaction]Open Unyu''s Reaction Page\__q\n/
+	\![*]\__q[OpenNokauka]Open nokauka\__q\n/
+	\![*]\__q[OpenUnyuReaction]Open Unyu''s Reaction Page\__q\n\n/
 	\![*]\__q[Close]Close\__q\n/
 	'
 }
@@ -61,7 +61,13 @@ sys.cs.OpenAngolmois
 }
 sys.cs.OpenNokauka
 {
-	'\![raiseplugin,ef757920-2bd0-11ef-8465-0800200c9a66,OnMenuExec]\e'
+	_plugin_id = 'ef757920-2bd0-11ef-8465-0800200c9a66'
+	if ASEARCH(_plugin_id, installedplugin_id) >= 0 {
+		'\![raiseplugin,ef757920-2bd0-11ef-8465-0800200c9a66,OnMenuExec]\e'
+	}
+	else {
+		'\![open,browser,https://github.com/nikolat/nokauka]\e'
+	}
 }
 sys.cs.OpenUnyuReaction
 {

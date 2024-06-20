@@ -1,0 +1,26 @@
+//******************************************************************************
+// initializing global variable
+//******************************************************************************
+OnSystemLoad.NOTIFY.EVENT
+{
+	installedplugin_name = IARRAY
+	installedplugin_id   = IARRAY
+}
+OnSystemUnload.NOTIFY.EVENT
+{
+	ERASEVAR('installedplugin_name')
+	ERASEVAR('installedplugin_id')
+}
+
+//******************************************************************************
+// installed plugin info
+//******************************************************************************
+On_installedplugin : void
+{
+	installedplugin_name = IARRAY
+	installedplugin_id   = IARRAY
+	foreach reference; _ref {
+		installedplugin_name ,= _ref[0,CHR(0x1)]
+		installedplugin_id   ,= _ref[1,CHR(0x1)]
+	}
+}
