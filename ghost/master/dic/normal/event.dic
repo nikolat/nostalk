@@ -224,7 +224,7 @@ Nostr.ShowTalk
 				"\![reload,shell]\0\s[1]\![bind,透明度,半透明,0]\_q\f[bold,true]%(SHIORI3FW.EscapeAllTags(sys.save.display_name))\f[bold,default] /
 				@%(SHIORI3FW.EscapeAllTags(sys.save.name))\n\n\_q/
 				\![set,balloonwait,0]%(SHIORI3FW.EscapeDangerousTags(sys.save.content))/
-				\_l[0,0]\f[align,right]\f[height,300%]\_a[fav,%(sys.save.note),%(sys.save.npub),%(sys.save.kind)]⭐\_a/
+				\_q\_l[0,0]\f[align,right]\f[height,300%]\_a[fav,%(sys.save.note),%(sys.save.npub),%(sys.save.kind)]⭐\_a\_q/
 				\e"
 		}
 		when 7 {
