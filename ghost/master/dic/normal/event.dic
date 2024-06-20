@@ -316,11 +316,13 @@ Nostr.Clear
 OnSystemUnload.Nostr
 {
 	ERASEVAR(/
+		'sys.save.kind',/
 		'sys.save.content',/
 		'sys.save.name',/
-		'sys.save.display_name'/
-		'sys.save.note'/
-		'sys.save.npub'/
+		'sys.save.display_name',/
+		'sys.save.note',/
+		'sys.save.npub',/
+		'sys.save.favscript'/
 	)
 	foreach FENUM('.\var\'); _path {
 		FDEL('.\var\' + _path)
