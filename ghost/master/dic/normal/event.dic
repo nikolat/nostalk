@@ -114,7 +114,7 @@ ExternalEvent.OnNostr
 OnNostr
 {
 	if sys.save.disable_sstp == 1 {
-		'\e'
+		'\C\e'
 		return
 	}
 	Nostr.Clear()
