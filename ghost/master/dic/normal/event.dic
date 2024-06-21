@@ -50,6 +50,7 @@ MouseDoubleClick0
 //******************************************************************************
 OnChoiceSelect
 {
+	sys.save.disable_sstp = ''
 	_id = reference[0]
 	if ISFUNC('sys.cs.' + _id) {
 		EVAL('sys.cs.' + _id)
@@ -75,7 +76,7 @@ sys.cs.OpenUnyuReaction
 }
 sys.cs.Close
 {
-	'\0\![bind,透明度,半透明,1]\e'
+	Nostr.Hide()
 }
 
 //******************************************************************************
@@ -107,6 +108,10 @@ ExternalEvent.OnNostr
 }
 OnNostr
 {
+	if sys.save.disable_sstp == 1 {
+		'\e'
+		return
+	}
 	Nostr.Clear()
 	_protocol_version = reference[0]
 	_avatar_url = ''
@@ -177,10 +182,19 @@ OnExecuteHTTPFailure
 }
 OnExecuteHTTPComplete
 {
-	if reference[0] != 'get' || reference[1] != 'save_avatar'
-		return
-	Nostr.Resize(reference[3])
-	Nostr.ShowTalk()
+	if reference[0] == 'get' && reference[1] == 'save_avatar' {
+		Nostr.Resize(reference[3])
+		Nostr.ShowTalk()
+	}
+	elseif reference[0] == 'get' && reference[1] == 'zap' {
+		_invoice = reference[3]
+		_path_b = GETSETTING('coreinfo.path') + 'var\invoice_b.png'
+		_path_a = GETSETTING('coreinfo.path') + 'var\invoice_a.png'
+		_ = SAORI('saori/qrcode/saori_qrcode.dll', 'image', _invoice, _path_b)
+		_ = SAORI('saori/saori-resized-png/resizedpngmini.dll', 'ToResizedPng', _path_b, _path_a, '300', '300')
+		"\0\b[2]\_q\_b[%(_path_a),centerx,centery]\e"
+		sys.save.disable_sstp = 1
+	}
 }
 Nostr.Resize
 {
@@ -221,12 +235,19 @@ Nostr.ShowTalk
 	case sys.save.kind {
 		when 1 {
 			if sys.save.content != '' {
+				_note = AYATEMPLATE.EscapeText(sys.save.note)
+				_npub = AYATEMPLATE.EscapeText(sys.save.npub)
+				_kind = AYATEMPLATE.EscapeText(sys.save.kind)
+				_content = AYATEMPLATE.EscapeText(sys.save.content)
 				"\![reload,shell]\0\s[1]\![bind,透明度,半透明,0]\_q\f[bold,true]%(SHIORI3FW.EscapeAllTags(sys.save.display_name))\f[bold,default] /
 					@%(SHIORI3FW.EscapeAllTags(sys.save.name))\n\n\_q/
 					\![set,balloonwait,0]%(SHIORI3FW.EscapeDangerousTags(sys.save.content))/
-					\_q\_l[0,0]\f[align,right]\f[height,300%]\_a[fav,%(AYATEMPLATE.EscapeText(sys.save.note)),%(AYATEMPLATE.EscapeText(sys.save.npub)),%(AYATEMPLATE.EscapeText(sys.save.kind)),%(AYATEMPLATE.EscapeText(sys.save.content))]⭐\_a\_q/
+					\_q\_l[0,0]\f[align,right]\f[height,300%]/
+					\_a[fav,%(_note),%(_npub),%(_kind),%(_content)]⭐\_a/
+					\_a[zap,%(_note),%(_npub),%(_kind),%(_content)]⚡️\_a/
 					\e"
-				sys.save.favscript = "\![raise,OnAnchorSelectEx,,fav,%(AYATEMPLATE.EscapeText(sys.save.note)),%(AYATEMPLATE.EscapeText(sys.save.npub)),%(AYATEMPLATE.EscapeText(sys.save.kind)),%(AYATEMPLATE.EscapeText(sys.save.content))]\e"
+				sys.save.favscript = "\![raise,OnAnchorSelectEx,,fav,%(_note),%(_npub),%(_kind),%(_content)]\e"
+				sys.save.zapscript = "\![raise,OnAnchorSelectEx,,zap,%(_note),%(_npub),%(_kind),%(_content)]\e"
 			}
 		}
 		when 7 {
@@ -283,10 +304,41 @@ sys.asex.fav
 			,--title=ReactionComplete/
 			,--icon=info]\e"
 }
+sys.asex.zap
+{
+	_note = ''
+	_nevent = ''
+	if RE_MATCH(reference[2], '^note1.+$')
+		_note = reference[2]
+	elseif RE_MATCH(reference[2], '^nevent1.+$')
+		_nevent = reference[2]
+	_npub = reference[3]
+	_kind = reference[4]
+	_content_note = reference[5]
+	_sats = 10
+	_url = 'https://nostr-unyu.vercel.app/api/query_zap'
+	if _note != ''
+		_url += "?note=%(_note)"
+	elseif _nevent != ''
+		_url += "?nevent=%(_nevent)"
+	_url += "&npub=%(_npub)"
+	_url += "&sats=%(_sats)"
+	"\![execute,http-get,%(_url),--async=zap,--nofile=UTF-8]/
+			\![set,trayballoon/
+			,--text=%(AYATEMPLATE.EscapeText(_content_note))/
+			,--title=ZapRequest/
+			,--icon=info]\e"
+	sys.save.disable_sstp = 1
+}
 sys.key.f
 {
 	sys.save.favscript
 	ERASEVAR('sys.save.favscript')
+}
+sys.key.z
+{
+	sys.save.zapscript
+	ERASEVAR('sys.save.zapscript')
 }
 OnBalloonClose
 {
@@ -298,6 +350,7 @@ OnBalloonTimeout
 }
 Nostr.Hide
 {
+	sys.save.disable_sstp = ''
 	'\0\s[0]\![bind,透明度,半透明,1]\e'
 }
 Nostr.DefaultAvatarPath
@@ -312,6 +365,7 @@ Nostr.Clear
 	sys.save.display_name = ''
 	sys.save.note = ''
 	sys.save.npub = ''
+	sys.save.disable_sstp = ''
 }
 OnSystemUnload.Nostr
 {
@@ -322,7 +376,9 @@ OnSystemUnload.Nostr
 		'sys.save.display_name',/
 		'sys.save.note',/
 		'sys.save.npub',/
-		'sys.save.favscript'/
+		'sys.save.npub',/
+		'sys.save.disable_sstp'/
+		'sys.save.zapscript'/
 	)
 	foreach FENUM('.\var\'); _path {
 		FDEL('.\var\' + _path)
