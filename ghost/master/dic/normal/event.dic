@@ -40,8 +40,9 @@ MouseDoubleClick0
 {
 	'\0\s[0]\![bind,透明度,半透明,0]\_q/
 	\![*]\__q[OpenAngolmois]Open Angolmois\__q\n/
-	\![*]\__q[OpenNokauka]Open nokauka\__q\n/
-	\![*]\__q[OpenUnyuReaction]Open Unyu''s Reaction Page\__q\n\n/
+	\![*]\__q[OpenNokauka]Open nokauka\__q\n\n/
+	\![*]\__q[OpenUnyuReaction]Open Unyu''s Reaction Page\__q\n/
+	\![*]\__q[OpenZaplinejp]Open zapline-jp\__q\n\n/
 	\![*]\__q[Close]Close\__q\n/
 	'
 }
@@ -73,6 +74,10 @@ sys.cs.OpenNokauka
 sys.cs.OpenUnyuReaction
 {
 	'\![open,browser,https://nostter.app/unyu@nikolat.github.io/reactions]\e'
+}
+sys.cs.OpenZaplinejp
+{
+	'\![open,browser,https://tiltpapa.github.io/zapline-jp/]\e'
 }
 sys.cs.Close
 {
