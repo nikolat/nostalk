@@ -2,9 +2,9 @@ charset,UTF-8
 file,LICENSE65d3616852dbf7b1a6d4b53b00626032size=7048date=2012-12-21T00:00:00
 file,ghost/master/descript.txt9108d2fdbb70b26abadae1760a207c96size=228date=2012-12-21T00:00:00
 file,ghost/master/dic/emerg/yaya_emerg_dic.dic9e18f57308e99887d939171bf11b22d3size=876date=2012-12-21T00:00:00
-file,ghost/master/dic/normal/event.dicf9a73809b7d34db938977ce8e4c6d5ffsize=10247date=2012-12-21T00:00:00
+file,ghost/master/dic/normal/event.dicfbcfb79edf1bdea564a27bace86b000fsize=10726date=2012-12-21T00:00:00
 file,ghost/master/dic/normal/notify.dic2e167cee8a6702f50b167083e9082da6size=780date=2012-12-21T00:00:00
-file,ghost/master/dic/normal/resource.dic1fb2887091495c3033d14f0a609c2090size=708date=2012-12-21T00:00:00
+file,ghost/master/dic/normal/resource.dica4bc7158744110c6f11a5633d70ab0b3size=1046date=2012-12-21T00:00:00
 file,ghost/master/dic/normal/yaya_tmpl_util.dicb120e7ff7bd2d223b98bf236562fbe47size=877date=2012-12-21T00:00:00
 file,ghost/master/dic/system/_loading_order.txt0868241bb617c7c18013e2c024d18dd9size=18date=2012-12-21T00:00:00
 file,ghost/master/dic/system/yaya_base/_loading_order.txt9c350c2c9c08f635bff5eaae149af8c8size=103date=2012-12-21T00:00:00
@@ -12,6 +12,7 @@ file,ghost/master/dic/system/yaya_base/config.dic44707dafa1e7e605e2816ca68c2a84
 file,ghost/master/dic/system/yaya_base/optional.dicff4da728a656a8aa6a38939e654c51f2size=9953date=2012-12-21T00:00:00
 file,ghost/master/dic/system/yaya_base/shiori3.dicac4750d7081a6607ac1c26184677020asize=55020date=2012-12-21T00:00:00
 file,ghost/master/image/cross.png42492684e24356a4081134894eabeb9esize=655date=2012-12-21T00:00:00
+file,ghost/master/image/help.pngc3812c74bc524179f4ccf5d2db7b3cbfsize=786date=2012-12-21T00:00:00
 file,ghost/master/image/lightning.pnga28a839beeaa96de9aaab2bd4f9ef14asize=634date=2012-12-21T00:00:00
 file,ghost/master/image/readme.txt5c6fb906c4d31bc38f5a57e903261af6size=476date=2012-12-21T00:00:00
 file,ghost/master/image/star.pngc8ca219ff43a2fb1dea67de2582123afsize=670date=2012-12-21T00:00:00
