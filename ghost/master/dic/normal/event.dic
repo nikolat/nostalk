@@ -38,13 +38,20 @@ OnMouseDoubleClick
 }
 MouseDoubleClick0
 {
-	'\0\s[0]\![bind,透明度,半透明,0]\_q/
+	sys.fnc.OpenMenu()
+}
+sys.fnc.OpenMenu
+{
+	sys.save.disable_sstp = 1
+	"\0\s[0]\![bind,透明度,半透明,0]\_q/
 	\![*]\__q[OpenAngolmois]Open Angolmois\__q\n/
 	\![*]\__q[OpenNokauka]Open nokauka\__q\n\n/
 	\![*]\__q[OpenUnyuReaction]Open Unyu''s Reaction Page\__q\n/
 	\![*]\__q[OpenZaplinejp]Open zapline-jp\__q\n\n/
-	\![*]\__q[Close]Close\__q\n/
-	'
+	\![*]\__q[Close]Close\__q/
+	\_l[0,0]\f[align,right]/
+	\__q[help]\_b[%(GETSETTING('coreinfo.path') + 'image\help.png'),inline,--clipping=0 0 16 16]\__q/
+	\e"
 }
 //******************************************************************************
 // select event
@@ -83,6 +90,20 @@ sys.cs.Close
 {
 	Nostr.Hide()
 }
+sys.cs.help
+{
+	sys.fnc.ShowHelp()
+}
+sys.fnc.ShowHelp
+{
+	sys.save.disable_sstp = 1
+	'\0\s[0]\![bind,透明度,半透明,0]\_qshortcut keys:\n\n/
+	h ... Help (this)\n/
+	f ... Fav (from Unyu)\n/
+	z ... Zap (from Unyu)\n/
+	r ... Reload (for debug)\n/
+	'
+}
 
 //******************************************************************************
 // key event
@@ -92,6 +113,20 @@ OnKeyPress
 	if ISFUNC('sys.key.' + reference[0]) {
 		EVAL('sys.key.' + reference[0])
 	}
+}
+sys.key.h
+{
+	sys.fnc.ShowHelp()
+}
+sys.key.f
+{
+	sys.save.favscript
+	ERASEVAR('sys.save.favscript')
+}
+sys.key.z
+{
+	sys.save.zapscript
+	ERASEVAR('sys.save.zapscript')
 }
 sys.key.r
 {
@@ -339,16 +374,6 @@ sys.asex.zap
 sys.asex.close
 {
 	Nostr.Hide()
-}
-sys.key.f
-{
-	sys.save.favscript
-	ERASEVAR('sys.save.favscript')
-}
-sys.key.z
-{
-	sys.save.zapscript
-	ERASEVAR('sys.save.zapscript')
 }
 OnBalloonClose
 {

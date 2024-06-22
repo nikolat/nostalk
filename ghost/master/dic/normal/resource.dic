@@ -19,3 +19,23 @@ On_sakura.recommendsites
 		yaya-shiori%(CHR(1))https://github.com/YAYA-shiori/yaya-shiori/wiki%(CHR(1))%(CHR(1))%(CHR(2))/
 	"
 }
+//******************************************************************************
+// tooltip
+//******************************************************************************
+On_balloon_tooltip
+{
+	case reference[1] {
+		when 'help' {
+			'Help'
+		}
+		when 'fav' {
+			'Fav'
+		}
+		when 'zap' {
+			'Zap'
+		}
+		when 'close' {
+			'Close'
+		}
+	}
+}
