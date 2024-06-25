@@ -219,6 +219,11 @@ OnNostr
 }
 OnExecuteHTTPFailure
 {
+	_filepath = Nostr.DefaultAvatarPath()
+	if FSIZE(_filepath) >= 0 {
+		Nostr.Resize(_filepath)
+		Nostr.ShowTalk()
+	}
 }
 OnExecuteHTTPComplete
 {
