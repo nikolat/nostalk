@@ -278,12 +278,12 @@ Nostr.Resize
 Nostr.ShowTalk
 {
 	case sys.save.kind {
+		_note = AYATEMPLATE.EscapeText(sys.save.note)
+		_npub = AYATEMPLATE.EscapeText(sys.save.npub)
+		_kind = AYATEMPLATE.EscapeText(sys.save.kind)
+		_content = AYATEMPLATE.EscapeText(sys.save.content)
 		when 1 {
 			if sys.save.content != '' {
-				_note = AYATEMPLATE.EscapeText(sys.save.note)
-				_npub = AYATEMPLATE.EscapeText(sys.save.npub)
-				_kind = AYATEMPLATE.EscapeText(sys.save.kind)
-				_content = AYATEMPLATE.EscapeText(sys.save.content)
 				"\![reload,shell]\0\s[1]\![bind,透明度,半透明,0]\_q\f[bold,true]%(SHIORI3FW.EscapeAllTags(sys.save.display_name))\f[bold,default] /
 					@%(SHIORI3FW.EscapeAllTags(sys.save.name))\n\n\_q/
 					\![set,balloonwait,0]%(SHIORI3FW.EscapeDangerousTags(sys.save.content))/
@@ -310,6 +310,9 @@ Nostr.ShowTalk
 			"\![reload,shell]\0\s[1]\![bind,透明度,半透明,0]\_q\f[bold,true]%(SHIORI3FW.EscapeAllTags(sys.save.display_name))\f[bold,default] /
 				@%(SHIORI3FW.EscapeAllTags(sys.save.name))\n\n/
 				%(_height)%(_color)\f[align,center]%(SHIORI3FW.EscapeDangerousTags(sys.save.content))/
+				\_l[0,0]\f[align,right]/
+				\_a[fav,%(_note),%(_npub),%(_kind),%(_content)]\_b[%(GETSETTING('coreinfo.path') + 'image\star.png'),inline,--clipping=0 0 16 16]\_a/
+				\_a[close]\_b[%(GETSETTING('coreinfo.path') + 'image\cross.png'),inline,--clipping=0 0 16 16]\_a/
 				\e"
 		}
 		others {
