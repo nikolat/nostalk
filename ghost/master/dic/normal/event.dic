@@ -316,7 +316,7 @@ Nostr.ShowTalk
 				\e"
 		}
 		others {
-			'\e'
+			Nostr.Hide()
 		}
 	}
 	Nostr.Clear()
