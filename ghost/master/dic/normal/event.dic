@@ -196,7 +196,7 @@ OnNostr
 		}
 	}
 	if sys.save.content == ''{
-		'\e'
+		Nostr.Hide()
 		return
 	}
 	_filename = ''
