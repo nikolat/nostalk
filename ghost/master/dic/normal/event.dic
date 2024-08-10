@@ -286,7 +286,7 @@ Nostr.ShowTalk
 			if sys.save.content != '' {
 				"\![reload,shell]\0\s[1]\![bind,透明度,半透明,0]\_q\f[bold,true]%(SHIORI3FW.EscapeAllTags(sys.save.display_name))\f[bold,default] /
 					@%(SHIORI3FW.EscapeAllTags(sys.save.name))\n\n\_q/
-					\![set,balloonwait,0]%(SHIORI3FW.EscapeDangerousTags(sys.save.content))/
+					\![set,balloonwait,0]%(SHIORI3FW.EscapeTagsWithoutNewLine(sys.save.content))/
 					\_q\_l[0,0]\f[align,right]/
 					\_a[fav,%(_note),%(_npub),%(_kind),%(_content)]\_b[%(GETSETTING('coreinfo.path') + 'image\star.png'),inline,--clipping=0 0 16 16]\_a/
 					\_a[zap,%(_note),%(_npub),%(_kind),%(_content)]\_b[%(GETSETTING('coreinfo.path') + 'image\lightning.png'),inline,--clipping=0 0 16 16]\_a/
@@ -309,7 +309,7 @@ Nostr.ShowTalk
 				_height = '\f[height,500%]'
 			"\![reload,shell]\0\s[1]\![bind,透明度,半透明,0]\_q\f[bold,true]%(SHIORI3FW.EscapeAllTags(sys.save.display_name))\f[bold,default] /
 				@%(SHIORI3FW.EscapeAllTags(sys.save.name))\n\n/
-				%(_height)%(_color)\f[align,center]%(SHIORI3FW.EscapeDangerousTags(sys.save.content))/
+				%(_height)%(_color)\f[align,center]%(SHIORI3FW.EscapeAllTags(sys.save.content))/
 				\_l[0,0]\f[align,right]/
 				\_a[fav,%(_note),%(_npub),%(_kind),%(_content)]\_b[%(GETSETTING('coreinfo.path') + 'image\star.png'),inline,--clipping=0 0 16 16]\_a/
 				\_a[close]\_b[%(GETSETTING('coreinfo.path') + 'image\cross.png'),inline,--clipping=0 0 16 16]\_a/
@@ -426,4 +426,17 @@ OnSystemUnload.Nostr
 	foreach FENUM('.\var\'); _path {
 		FDEL('.\var\' + _path)
 	}
+}
+SHIORI3FW.EscapeTagsWithoutNewLine{
+	_ESCAPE_TAG_3 = CHR(0x5,0x5)
+	_txt=_argv[0]
+	_txt=REPLACE(_txt,'\\',ESCAPE_TAG_1)
+	_txt=REPLACE(_txt,'\%',ESCAPE_TAG_2)
+	_txt=REPLACE(_txt,'\n',_ESCAPE_TAG_3)
+	_txt=REPLACE(_txt,'\','\\')
+	_txt=REPLACE(_txt,'%','\%')
+	_txt=REPLACE(_txt,_ESCAPE_TAG_3,'\n')
+	_txt=REPLACE(_txt,ESCAPE_TAG_2,'\%')
+	_txt=REPLACE(_txt,ESCAPE_TAG_1,'\\')
+	_txt
 }
