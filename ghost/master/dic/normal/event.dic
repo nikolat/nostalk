@@ -427,14 +427,23 @@ OnSystemUnload.Nostr
 		FDEL('.\var\' + _path)
 	}
 }
-SHIORI3FW.EscapeTagsWithoutNewLine{
+SHIORI3FW.EscapeTagsWithoutNewLine
+{
 	_ESCAPE_TAG_3 = CHR(0x5,0x5)
+	_ESCAPE_TAG_4 = CHR(0x6,0x6)
+	_ESCAPE_TAG_5 = CHR(0x7,0x7)
 	_txt=_argv[0]
 	_txt=REPLACE(_txt,'\\',ESCAPE_TAG_1)
 	_txt=REPLACE(_txt,'\%',ESCAPE_TAG_2)
 	_txt=REPLACE(_txt,'\n',_ESCAPE_TAG_3)
+	_txt=REPLACE(_txt,'\[',_ESCAPE_TAG_4)
+	_txt=REPLACE(_txt,'\]',_ESCAPE_TAG_5)
 	_txt=REPLACE(_txt,'\','\\')
 	_txt=REPLACE(_txt,'%','\%')
+	_txt=REPLACE(_txt,'[','\[')
+	_txt=REPLACE(_txt,']','\]')
+	_txt=REPLACE(_txt,_ESCAPE_TAG_5,'\]')
+	_txt=REPLACE(_txt,_ESCAPE_TAG_4,'\[')
 	_txt=REPLACE(_txt,_ESCAPE_TAG_3,'\n')
 	_txt=REPLACE(_txt,ESCAPE_TAG_2,'\%')
 	_txt=REPLACE(_txt,ESCAPE_TAG_1,'\\')
