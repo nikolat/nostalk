@@ -21,11 +21,11 @@ file,ghost/master/saori/qrcode/saori_qrcode.dll31cfc085d469754e3995e285a0e41371
 file,ghost/master/saori/saori-resized-png/LICENSEf3c3c8e6b84d05f6d3cf8db4ca04a66esize=1070date=2012-12-21T00:00:00
 file,ghost/master/saori/saori-resized-png/resizedpngmini.dll597a905e4daba0832aef6058a3cf0c70size=689152date=2012-12-21T00:00:00
 file,ghost/master/system_config.txt3965602fadd8acb2ee46c0310704c3e1size=682date=2012-12-21T00:00:00
-file,ghost/master/yaya.dll49b388973209005e5586f9e54b008bb1size=880640date=2012-12-21T00:00:00
+file,ghost/master/yaya.dllfde7d3a9493076e29f43a8e757bf1231size=880640date=2012-12-21T00:00:00
 file,ghost/master/yaya.txt455bf51a1c71d34507b50e7f0b93c70csize=2498date=2012-12-21T00:00:00
 file,ghost/master/yaya_emerg.txtd9ee78e2068ff80d809325bd4fa8228bsize=1055date=2012-12-21T00:00:00
 file,install.txt2f38bfbc2ece3ab6165e0b8378eb4627size=56date=2012-12-21T00:00:00
-file,readme.txt8da231b7be64fb74a11f36d308898497size=1681date=2012-12-21T00:00:00
+file,readme.txt108fd91c7faa420284e3c499cfef6ae1size=1681date=2012-12-21T00:00:00
 file,shell/master/circle.png0a68a304adcb6ac49f1d177bdcae131asize=432date=2012-12-21T00:00:00
 file,shell/master/default.png131f6166302e7957088a5cac4b3f4c60size=443date=2012-12-21T00:00:00
 file,shell/master/descript.txta80e4c18edd161107c7553d8652e2a87size=274date=2012-12-21T00:00:00
