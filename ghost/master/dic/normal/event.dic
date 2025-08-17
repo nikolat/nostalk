@@ -105,6 +105,19 @@ sys.fnc.ShowHelp
 	'
 }
 
+OnAnchorSelect
+{
+	if ISFUNC('sys.as.' + reference[0]) {
+		EVAL('sys.as.' + reference[0])
+	}
+}
+OnAnchorSelectEx
+{
+	if ISFUNC('sys.asex.' + reference[1]) {
+		EVAL('sys.asex.' + reference[1])
+	}
+}
+
 //******************************************************************************
 // key event
 //******************************************************************************
@@ -297,12 +310,12 @@ Nostr.ShowTalk
 					@%(SHIORI3FW.EscapeAllTags(sys.save.name))\n\n\_q/
 					\![set,balloonwait,0]%(SHIORI3FW.EscapeTagsWithoutNewLine(sys.save.content))/
 					\_q\_l[0,0]\f[align,right]/
-					\_a[fav,%(_note),%(_npub),%(_kind),%(_content)]\_b[%(GETSETTING('coreinfo.path') + 'image\star.png'),inline,--clipping=0 0 16 16]\_a/
-					\_a[zap,%(_note),%(_npub),%(_kind),%(_content)]\_b[%(GETSETTING('coreinfo.path') + 'image\lightning.png'),inline,--clipping=0 0 16 16]\_a/
+					\_a[fav]\_b[%(GETSETTING('coreinfo.path') + 'image\star.png'),inline,--clipping=0 0 16 16]\_a/
+					\_a[zap]\_b[%(GETSETTING('coreinfo.path') + 'image\lightning.png'),inline,--clipping=0 0 16 16]\_a/
 					\_a[close]\_b[%(GETSETTING('coreinfo.path') + 'image\cross.png'),inline,--clipping=0 0 16 16]\_a/
 					\e"
-				sys.save.favscript = "\![raise,OnAnchorSelectEx,,fav,%(_note),%(_npub),%(_kind),%(_content)]\e"
-				sys.save.zapscript = "\![raise,OnAnchorSelectEx,,zap,%(_note),%(_npub),%(_kind),%(_content)]\e"
+				sys.save.favscript = "\![raise,OnAnchorSelectEx,,favscript,%(_note),%(_npub),%(_kind),%(_content)]\e"
+				sys.save.zapscript = "\![raise,OnAnchorSelectEx,,zapscript,%(_note),%(_npub),%(_kind),%(_content)]\e"
 			}
 		}
 		when 7 {
@@ -320,9 +333,9 @@ Nostr.ShowTalk
 				@%(SHIORI3FW.EscapeAllTags(sys.save.name))\n\n/
 				%(_height)%(_color)\f[align,center]%(SHIORI3FW.EscapeAllTags(sys.save.content))/
 				\_l[0,0]\f[align,right]/
-				\_a[fav,%(_note),%(_npub),%(_kind),%(_content)]\_b[%(GETSETTING('coreinfo.path') + 'image\star.png'),inline,--clipping=0 0 16 16]\_a/
 				\_a[close]\_b[%(GETSETTING('coreinfo.path') + 'image\cross.png'),inline,--clipping=0 0 16 16]\_a/
 				\e"
+			sys.save.favscript = "\![raise,OnAnchorSelectEx,,favscript,%(_note),%(_npub),%(_kind),%(_content)]\e"
 		}
 		others {
 			Nostr.Hide()
@@ -330,13 +343,12 @@ Nostr.ShowTalk
 	}
 	Nostr.Clear()
 }
-OnAnchorSelectEx
+
+sys.as.fav
 {
-	if ISFUNC('sys.asex.' + reference[1]) {
-		EVAL('sys.asex.' + reference[1])
-	}
+	sys.save.favscript
 }
-sys.asex.fav
+sys.asex.favscript
 {
 	_note = ''
 	_nevent = ''
@@ -362,7 +374,11 @@ sys.asex.fav
 			,--title=ReactionComplete/
 			,--icon=info]\e"
 }
-sys.asex.zap
+sys.as.zap
+{
+	sys.save.zapscript
+}
+sys.asex.zapscript
 {
 	_note = ''
 	_nevent = ''
@@ -431,6 +447,8 @@ OnSystemUnload.Nostr
 		'sys.save.disable_sstp'/
 		'sys.save.zapscript'/
 		'sys.save.shell_path'/
+		'sys.save.favscript'/
+		'sys.save.zapscript'/
 	)
 	foreach FENUM('.\var\'); _path {
 		FDEL('.\var\' + _path)
