@@ -45,7 +45,8 @@ sys.fnc.OpenMenu
 	sys.save.disable_sstp = 1
 	"\0\s[0]\![bind,透明度,半透明,0]\_q/
 	\![*]\__q[OpenAngolmois]Open Angolmois\__q\n/
-	\![*]\__q[OpenNokauka]Open nokauka\__q\n\n/
+	\![*]\__q[OpenNokauka]Open nokauka\__q\n/
+	\![*]\__q[OpenOmochatuka]Open omochatuka\__q\n\n/
 	\![*]\__q[OpenUnyuReaction]Open Unyu's Reaction Page\__q\n/
 	\![*]\__q[OpenZaplinejp]Open zapline-jp\__q\n\n/
 	\![*]\__q[Close]Close\__q/
@@ -72,10 +73,20 @@ sys.cs.OpenNokauka
 {
 	_plugin_id = 'ef757920-2bd0-11ef-8465-0800200c9a66'
 	if ASEARCH(_plugin_id, installedplugin_id) >= 0 {
-		'\![raiseplugin,ef757920-2bd0-11ef-8465-0800200c9a66,OnMenuExec]\e'
+		"\![raiseplugin,%(_plugin_id),OnMenuExec]\e"
 	}
 	else {
 		'\![open,browser,https://github.com/nikolat/nokauka]\e'
+	}
+}
+sys.cs.OpenOmochatuka
+{
+	_plugin_id = '719d0e10-8588-11f0-b558-0800200c9a66'
+	if ASEARCH(_plugin_id, installedplugin_id) >= 0 {
+		"\![raiseplugin,%(_plugin_id),OnMenuExec]\e"
+	}
+	else {
+		'\![open,browser,https://github.com/nikolat/omochatuka]\e'
 	}
 }
 sys.cs.OpenUnyuReaction
