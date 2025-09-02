@@ -223,6 +223,24 @@ OnNostr
 			sys.save.note = reference[6]
 			sys.save.npub = reference[7]
 		}
+		when 'Nostr/0.5' {
+			_kind = reference[1]
+			_supported_kinds = (1, 7, 20000)
+			if ASEARCH(_kind, _supported_kinds) == -1 {
+				'\e'
+				return
+			}
+			sys.save.kind = _kind
+			sys.save.content = reference[2]
+			sys.save.name = reference[3]
+			sys.save.display_name = reference[4]
+			_avatar_url = reference[5]
+			sys.save.note = reference[6]
+			sys.save.npub = reference[7]
+			sys.save.g_tag = reference[8]
+			sys.save.n_tag = reference[9]
+			sys.save.t_tag = reference[10]
+		}
 		others {
 			'\e'
 			return
@@ -315,10 +333,19 @@ Nostr.ShowTalk
 		_npub = AYATEMPLATE.EscapeText(sys.save.npub)
 		_kind = AYATEMPLATE.EscapeText(sys.save.kind)
 		_content = AYATEMPLATE.EscapeText(sys.save.content)
-		when 1 {
+		_g = AYATEMPLATE.EscapeText(sys.save.g_tag)
+		_n = AYATEMPLATE.EscapeText(sys.save.n_tag)
+		_t = AYATEMPLATE.EscapeText(sys.save.t_tag)
+		when 1, 20000 {
+			_display_name = sys.save.display_name
+			_name = sys.save.name
+			if _n != '' && _g != '' {
+				_display_name = 'Bitchat'
+				_name = _n + ' #' + _g
+			}
 			if sys.save.content != '' {
-				"\![reload,shell]\0\s[1]\![bind,透明度,半透明,0]\_q\f[bold,true]%(SHIORI3FW.EscapeAllTags(sys.save.display_name))\f[bold,default] /
-					@%(SHIORI3FW.EscapeAllTags(sys.save.name))\n\n\_q/
+				"\![reload,shell]\0\s[1]\![bind,透明度,半透明,0]\_q\f[bold,true]%(SHIORI3FW.EscapeAllTags(_display_name))\f[bold,default] /
+					@%(SHIORI3FW.EscapeAllTags(_name))\n\n\_q/
 					\![set,balloonwait,0]%(SHIORI3FW.EscapeTagsWithoutNewLine(sys.save.content))/
 					\_q\_l[0,0]\f[align,right]/
 					\_a[fav]\_b[%(GETSETTING('coreinfo.path') + 'image\star.png'),inline,--clipping=0 0 16 16]\_a/
@@ -444,6 +471,9 @@ Nostr.Clear
 	sys.save.display_name = ''
 	sys.save.note = ''
 	sys.save.npub = ''
+	sys.save.g_tag = ''
+	sys.save.n_tag = ''
+	sys.save.t_tag = ''
 	sys.save.disable_sstp = ''
 }
 OnSystemUnload.Nostr
@@ -455,6 +485,9 @@ OnSystemUnload.Nostr
 		'sys.save.display_name',/
 		'sys.save.note',/
 		'sys.save.npub',/
+		'sys.save.g_tag',/
+		'sys.save.n_tag',/
+		'sys.save.t_tag',/
 		'sys.save.disable_sstp'/
 		'sys.save.zapscript'/
 		'sys.save.shell_path'/
